@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>MBBS Attendance Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- App Root: Naturally fills viewport without artificial phone border -->
+  <div class="app-root">
+
+    <!-- Top Header: Date Navigation, Time, and Weekday -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="date-stepper">
+          <button type="button" id="prev-date-btn" class="date-step-btn" title="Previous Day" aria-label="Previous Day">&#8249;</button>
+          <div class="date-display-wrap" id="date-display-wrap" title="Tap to select date">
+            <span class="date-label">Date :-</span>
+            <span id="current-date" class="date-val">--</span>
+            <input type="date" id="date-picker-input" class="hidden-date-input" aria-label="Pick date">
+          </div>
+          <button type="button" id="next-date-btn" class="date-step-btn" title="Next Day" aria-label="Next Day">&#8250;</button>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="time-row">
+          <span class="time-label">Time:</span>
+          <span id="current-time" class="time-val">--:-- --</span>
+        </div>
+        <div id="current-day" class="day-val">------</div>
+      </div>
+    </header>
+
+    <!-- Vertically Scrollable Timetable Area -->
+    <main class="timetable-scroll-area">
+      <!-- Demo Data Notice (Visible only when showing unconfigured demo entries) -->
+      <div id="demo-banner" class="demo-banner hidden">
+        <span>Sample Demo Schedule (No custom timetable configured)</span>
+      </div>
+
+      <div class="timetable-boxes" id="timetable-boxes">
+
+        <!-- Class 1: PEDIATRIC -->
+        <article class="class-box" 
+          data-session-id="pediatric_0800_0900" 
+          data-subject="PEDIATRIC" 
+          data-start-time="08:00 AM" 
+          data-end-time="09:00 AM" 
+          data-state="empty" 
+          data-locked="false" 
+          role="button" 
+          tabindex="0" 
+          aria-label="Pediatric Class Box">
+          <!-- Unlock Hold Progress Indicator (0 to 100% during 5-sec continuous press) -->
+          <div class="unlock-progress-bar" aria-hidden="true"></div>
+
+          <!-- Upper-Right Corner Lock Indicator -->
+          <div class="lock-indicator" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="lock-svg locked-svg">
+              <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+            </svg>
+            <svg viewBox="0 0 24 24" class="lock-svg unlocked-svg">
+              <path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5-2.28 0-4.27 1.54-4.84 3.75l1.93.52C14.47 3.86 15.66 3 17 3c1.66 0 3 1.34 3 3v2h-8c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2h-6z"/>
+            </svg>
+            <span class="unlocked-badge">Unlocked</span>
+          </div>
+
+          <div class="box-content">
+            <div class="box-main-info">
+              <span class="subject-title">PEDIATRIC</span>
+            </div>
+            <span class="subject-time">8 - 9 AM</span>
+          </div>
+        </article>
+
+        <!-- Class 2: Clinical Posting -->
+        <article class="class-box" 
+          data-session-id="clinical_posting_0900_1200" 
+          data-subject="Clinical posting" 
+          data-start-time="09:00 AM" 
+          data-end-time="12:00 PM" 
+          data-state="empty" 
+          data-locked="false" 
+          role="button" 
+          tabindex="0" 
+          aria-label="Clinical Posting Class Box">
+          <div class="unlock-progress-bar" aria-hidden="true"></div>
+
+          <div class="lock-indicator" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="lock-svg locked-svg">
+              <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+            </svg>
+            <svg viewBox="0 0 24 24" class="lock-svg unlocked-svg">
+              <path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5-2.28 0-4.27 1.54-4.84 3.75l1.93.52C14.47 3.86 15.66 3 17 3c1.66 0 3 1.34 3 3v2h-8c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2h-6z"/>
+            </svg>
+            <span class="unlocked-badge">Unlocked</span>
+          </div>
+
+          <div class="box-content">
+            <div class="box-main-info">
+              <span class="subject-title">Clinical posting</span>
+            </div>
+            <span class="subject-time">9 - 12 AM</span>
+          </div>
+        </article>
+
+        <!-- Class 3: Surgery -->
+        <article class="class-box" 
+          data-session-id="surgery_1200_1300" 
+          data-subject="Surgery" 
+          data-start-time="12:00 PM" 
+          data-end-time="01:00 PM" 
+          data-state="empty" 
+          data-locked="false" 
+          role="button" 
+          tabindex="0" 
+          aria-label="Surgery Class Box">
+          <div class="unlock-progress-bar" aria-hidden="true"></div>
+
+          <div class="lock-indicator" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="lock-svg locked-svg">
+              <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+            </svg>
+            <svg viewBox="0 0 24 24" class="lock-svg unlocked-svg">
+              <path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5-2.28 0-4.27 1.54-4.84 3.75l1.93.52C14.47 3.86 15.66 3 17 3c1.66 0 3 1.34 3 3v2h-8c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2h-6z"/>
+            </svg>
+            <span class="unlocked-badge">Unlocked</span>
+          </div>
+
+          <div class="box-content">
+            <div class="box-main-info">
+              <span class="subject-title">Surgery</span>
+            </div>
+            <span class="subject-time">12 - 1 PM</span>
+          </div>
+        </article>
+
+      </div>
+    </main>
+
+    <!-- Temporary Hint / Toast for Lock & Unlock Interaction -->
+    <div id="status-toast" class="status-toast" aria-live="polite"></div>
+
+    <!-- Fixed Bottom Oval Button with White Star -->
+    <footer class="app-footer">
+      <button type="button" id="star-menu-btn" class="oval-star-btn" aria-label="Open Menu" aria-haspopup="dialog" aria-expanded="false">
+        <svg viewBox="0 0 24 24" class="star-svg" aria-hidden="true">
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+        </svg>
+      </button>
+    </footer>
+
+    <!-- Secondary Menu Drawer (5 options) -->
+    <div id="menu-overlay" class="menu-overlay" aria-hidden="true">
+      <div class="menu-backdrop" id="menu-backdrop"></div>
+      
+      <!-- Top-Right Settings Option -->
+      <button type="button" id="menu-settings-btn" class="menu-settings-btn" aria-label="Settings" title="Settings">
+        <svg viewBox="0 0 24 24" class="settings-svg" aria-hidden="true">
+          <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+        </svg>
+      </button>
+
+      <div class="menu-panel" role="dialog" aria-modal="true" aria-labelledby="menu-title-hidden">
+        <h2 id="menu-title-hidden" class="sr-only">Menu Options</h2>
+        
+        <div class="menu-pill-stack">
+          <button type="button" class="menu-pill" data-feature="Semester Timetable">
+            Semester Timetable
+          </button>
+          <button type="button" class="menu-pill" data-feature="Replace Classes">
+            Replace Classes
+          </button>
+          <button type="button" class="menu-pill" data-feature="Overview Attendance">
+            Overview Attendance
+          </button>
+          <button type="button" class="menu-pill" data-feature="+1 or -1">
+            +1 or -1
+          </button>
+          <button type="button" class="menu-pill" data-feature="Clinical Timetable">
+            Clinical Timetable
+          </button>
+          <button type="button" class="menu-pill" data-feature="Attendance History">
+            Attendance History
+          </button>
+          <button type="button" class="menu-pill" data-feature="Export / Import">
+            Export / Import Data
+          </button>
+        </div>
+
+        <div class="menu-bottom-bar">
+          <button type="button" id="close-menu-btn" class="oval-star-btn" aria-label="Close Menu">
+            <svg viewBox="0 0 24 24" class="star-svg" aria-hidden="true">
+              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Unified Semester Timetable Panel -->
+    <section id="semester-timetable-panel" class="feature-panel" aria-hidden="true">
+      <div class="panel-header">
+        <button type="button" id="sem-panel-back-btn" class="panel-back-btn" aria-label="Back">
+          &larr; Back
+        </button>
+        <span class="panel-title-text">Semester Timetable</span>
+        <div class="panel-header-actions">
+          <button type="button" id="sem-import-btn" class="panel-action-btn btn-secondary-pill" title="Import from clipboard/code">📥 Import</button>
+          <button type="button" id="sem-add-new-btn" class="panel-action-btn">+ New</button>
+        </div>
+      </div>
+
+      <div class="panel-scroll-body">
+        
+        <!-- View 1: Semester Templates List -->
+        <div id="sem-list-view" class="sem-view">
+          <div class="sem-info-banner">
+            <p>Create and manage semester weekly templates. Only one semester is active at a time; activation takes effect from the day you activate it without altering past attendance.</p>
+          </div>
+
+          <div class="sem-list-container">
+            <div class="sem-list-header">
+              <h3>Configured Semesters (<span id="sem-count">0</span>)</h3>
+            </div>
+            <div id="semesters-container" class="semesters-container">
+              <!-- Dynamically populated semester cards -->
+            </div>
+          </div>
+        </div>
+
+        <!-- View 2: Semester Editor (Create or Edit Full Weekly Timetable) -->
+        <div id="sem-editor-view" class="sem-view hidden">
+          <div class="form-title-row">
+            <h3 id="sem-editor-title">Create Semester</h3>
+            <input type="hidden" id="sem-edit-id" value="">
+          </div>
+
+          <div class="form-group">
+            <label for="sem-label-input">Semester Label / Name *</label>
+            <input type="text" id="sem-label-input" class="tt-input" placeholder="e.g. Semester 4, Semester 5" required>
+          </div>
+
+          <!-- Weekly Schedule Sessions Builder -->
+          <div class="sem-builder-header">
+            <div>
+              <span class="builder-title">Weekly Timetable</span>
+              <span class="builder-subtitle">(<span id="sem-builder-count">0</span> classes Mon–Sat)</span>
+            </div>
+            <button type="button" id="sem-builder-add-row-btn" class="panel-action-btn" style="display:none;">+ Add Class</button>
+          </div>
+
+          <div id="sem-builder-rows" class="sem-builder-rows">
+            <!-- Dynamically populated editable session entries by day (Sunday to Saturday) -->
+          </div>
+
+          <div id="sem-editor-error-msg" class="form-error hidden"></div>
+
+          <div class="form-actions">
+            <button type="button" id="sem-editor-cancel-btn" class="tt-btn tt-btn-secondary">Cancel</button>
+            <button type="button" id="sem-editor-save-btn" class="tt-btn tt-btn-primary">Save Semester</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Timetable Weekly Review Modal (Read-only review without activating) -->
+      <div id="sem-view-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="sem-view-modal-title">
+        <div class="modal-card">
+          <div class="modal-header">
+            <h3 id="sem-view-modal-title" class="modal-title">Weekly Timetable</h3>
+            <button type="button" id="sem-view-modal-close-btn" class="modal-close-btn" aria-label="Close">&times;</button>
+          </div>
+          <div id="sem-view-modal-body" class="modal-body">
+            <!-- Dynamically populated Sunday-Saturday breakdown -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="sem-view-modal-dismiss-btn" class="tt-btn tt-btn-secondary">Close</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Semester Activation Confirmation Modal -->
+      <div id="sem-activate-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="activate-modal-title">
+        <div class="modal-card">
+          <div class="modal-header">
+            <h3 id="activate-modal-title" class="modal-title">Activate Semester</h3>
+            <button type="button" id="activate-modal-close-btn" class="modal-close-btn" aria-label="Close">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p class="modal-prompt">
+              Set <strong id="activate-sem-name" class="highlight-text">Semester</strong> as the active timetable?
+            </p>
+            <p class="modal-note">
+              Starting from today (<strong id="activate-sem-date">--</strong>), the main attendance screen will follow this schedule. All historical attendance logged before today remains strictly preserved.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="activate-cancel-btn" class="tt-btn tt-btn-secondary">Cancel</button>
+            <button type="button" id="activate-confirm-btn" class="tt-btn tt-btn-primary">Confirm &amp; Activate</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Semester Share / Copy Link Modal -->
+      <div id="sem-share-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
+        <div class="modal-card">
+          <div class="modal-header">
+            <h3 id="share-modal-title" class="modal-title">Share Timetable</h3>
+            <button type="button" id="share-modal-close-btn" class="modal-close-btn" aria-label="Close">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p class="modal-prompt">
+              Share <strong id="share-sem-name" class="highlight-text">Semester</strong> with your classmates:
+            </p>
+            <p class="modal-note" style="margin-bottom:12px;">
+              Your batchmates can copy this code and tap <strong>Import</strong> in their app to get your exact timetable instantly without setting it up from scratch!
+            </p>
+            <div class="form-group">
+              <label for="share-code-textarea">Timetable Share Code</label>
+              <textarea id="share-code-textarea" class="tt-input" rows="4" readonly style="font-family:monospace; font-size:0.75rem; word-break:break-all;"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer" style="gap:8px;">
+            <button type="button" id="share-modal-cancel-btn" class="tt-btn tt-btn-secondary">Close</button>
+            <button type="button" id="share-copy-btn" class="tt-btn tt-btn-secondary">📋 Copy Code</button>
+            <button type="button" id="share-send-btn" class="tt-btn tt-btn-primary">📤 Share App</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Semester Import / Paste Code Modal -->
+      <div id="sem-import-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="import-modal-title">
+        <div class="modal-card">
+          <div class="modal-header">
+            <h3 id="import-modal-title" class="modal-title">📥 Import Shared Timetable</h3>
+            <button type="button" id="import-modal-close-btn" class="modal-close-btn" aria-label="Close">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p class="modal-prompt" style="margin-bottom:10px;">
+              Paste the code or message shared by your friend:
+            </p>
+            <div class="form-group">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <label for="sem-import-code-input" style="margin-bottom:0;">Shared Code / Link</label>
+                <button type="button" id="sem-clipboard-paste-btn" class="sem-btn" style="font-size:0.72rem; padding:3px 8px;">📋 Paste Clipboard</button>
+              </div>
+              <textarea id="sem-import-code-input" class="tt-input" rows="3" placeholder="Paste MBBSSHARE:... code here"></textarea>
+            </div>
+
+            <!-- Import Preview Box -->
+            <div id="sem-import-preview" class="sem-import-preview-box hidden">
+              <div class="form-group" style="margin-bottom:8px;">
+                <label for="sem-import-label">Semester Name (Rename if needed)</label>
+                <input type="text" id="sem-import-label" class="tt-input" placeholder="e.g. Semester 4">
+              </div>
+              <div class="sem-import-stats">
+                <span id="sem-import-session-count" class="import-badge">-- sessions</span>
+                <span id="sem-import-status" style="font-size:0.75rem; color:#4ade80;">✅ Valid Timetable</span>
+              </div>
+              <div id="sem-import-subjects-list" class="sem-import-chips"></div>
+            </div>
+
+            <div id="sem-import-error" class="form-error hidden" style="margin-top:8px;"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="import-modal-cancel-btn" class="tt-btn tt-btn-secondary">Cancel</button>
+            <button type="button" id="import-confirm-btn" class="tt-btn tt-btn-primary" disabled>Save to My Timetables</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Clinical Postings Timetable Panel -->
+    <section id="clinical-timetable-panel" class="feature-panel" aria-hidden="true">
+      <div class="panel-header">
+        <button type="button" id="clinical-panel-back-btn" class="panel-back-btn" aria-label="Back">
+          &larr; Back
+        </button>
+        <span class="panel-title-text">Clinical Timetable</span>
+        <button type="button" id="clinical-add-new-btn" class="panel-action-btn">+ New Posting</button>
+      </div>
+
+      <div class="panel-scroll-body">
+        
+        <!-- View 1: Clinical Postings List -->
+        <div id="clinical-list-view" class="sem-view">
+          <div class="sem-info-banner">
+            <p>Schedule your clinical rotations across hospital departments. The active posting automatically appears on the home page for corresponding dates.</p>
+          </div>
+
+          <div class="sem-list-container">
+            <div class="sem-list-header">
+              <h3>Clinical Rotations (<span id="clinical-count">0</span>)</h3>
+            </div>
+            <div id="clinical-postings-container" class="semesters-container">
+              <!-- Dynamically populated clinical posting cards -->
+            </div>
+          </div>
+        </div>
+
+        <!-- View 2: Clinical Posting Editor (Add or Edit) -->
+        <div id="clinical-editor-view" class="sem-view hidden">
+          <div class="form-title-row">
+            <h3 id="clinical-editor-title">Add Clinical Posting</h3>
+            <input type="hidden" id="clinical-edit-id" value="">
+          </div>
+
+          <div class="form-group">
+            <label for="clinical-subject-select">Department / Subject (19 MBBS Subjects) *</label>
+            <select id="clinical-subject-select" class="tt-input" required>
+              <!-- 19 MBBS subjects populated dynamically -->
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="clinical-start-date">From Date *</label>
+              <input type="date" id="clinical-start-date" class="tt-input" required>
+            </div>
+            <div class="form-group flex-1">
+              <label for="clinical-end-date">To Date *</label>
+              <input type="date" id="clinical-end-date" class="tt-input" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="clinical-start-time">Daily Start Time</label>
+              <input type="time" id="clinical-start-time" class="tt-input" value="09:00">
+            </div>
+            <div class="form-group flex-1">
+              <label for="clinical-end-time">Daily End Time</label>
+              <input type="time" id="clinical-end-time" class="tt-input" value="12:00">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="clinical-unit-input">Unit / Ward / Location (Optional)</label>
+            <input type="text" id="clinical-unit-input" class="tt-input" placeholder="e.g. Unit 2, Male Surgical Ward">
+          </div>
+
+          <div id="clinical-editor-error-msg" class="form-error hidden"></div>
+
+          <div class="form-actions">
+            <button type="button" id="clinical-editor-cancel-btn" class="tt-btn tt-btn-secondary">Cancel</button>
+            <button type="button" id="clinical-editor-save-btn" class="tt-btn tt-btn-primary">Save Posting</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Replace Classes Panel -->
+    <section id="replace-classes-panel" class="feature-panel" aria-hidden="true">
+      <div class="panel-header">
+        <button type="button" id="rc-panel-back-btn" class="panel-back-btn" aria-label="Back">
+          &larr; Back
+        </button>
+        <span class="panel-title-text">Replace Classes</span>
+        <button type="button" id="rc-add-extra-btn" class="panel-action-btn">+ Extra Class</button>
+      </div>
+
+      <div class="panel-scroll-body">
+        
+        <!-- Date Stepper Bar inside Replace Classes -->
+        <div class="rc-date-bar">
+          <button type="button" id="rc-prev-date-btn" class="rc-date-step-btn" title="Previous Day">&#8249;</button>
+          <div class="rc-date-display" id="rc-date-display-wrap" title="Tap to pick date">
+            <span id="rc-date-label">Today</span>: <span id="rc-date-val">--</span>
+            <input type="date" id="rc-date-picker-input" class="rc-hidden-date-input" aria-label="Pick Replacement Date">
+          </div>
+          <button type="button" id="rc-next-date-btn" class="rc-date-step-btn" title="Next Day">&#8250;</button>
+        </div>
+
+        <div class="sem-info-banner">
+          <p>Substitute, swap, cancel, or add compensatory classes for this specific date. Permanent semester timetables remain unaffected.</p>
+        </div>
+
+        <!-- Section: Scheduled Classes on this date -->
+        <div class="sem-list-container">
+          <div class="sem-list-header">
+            <h3>Scheduled Classes (<span id="rc-scheduled-count">0</span>)</h3>
+          </div>
+          <div id="rc-classes-container" class="semesters-container">
+            <!-- Dynamically populated class cards with swap/cancel actions -->
+          </div>
+        </div>
+
+        <!-- Section: Extra Classes on this date -->
+        <div class="rc-extra-section">
+          <div class="rc-extra-header">
+            <span class="rc-extra-title">Extra Classes on this Date (<span id="rc-extra-count">0</span>)</span>
+            <button type="button" id="rc-inline-add-extra-btn" class="sem-day-add-btn">+ Add Extra</button>
+          </div>
+          <div id="rc-extra-container" class="semesters-container">
+            <!-- Dynamically populated extra classes -->
+          </div>
+        </div>
+
+        <!-- Section: Dates with Changes (Quick Navigation) -->
+        <div id="rc-history-section" class="rc-history-section hidden">
+          <span class="rc-history-title">Dates with Modifications</span>
+          <div id="rc-history-chips" class="rc-history-chips">
+            <!-- Dynamically populated date chips -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal: Substitute Class Modal -->
+      <div id="rc-sub-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="rc-sub-modal-title">
+        <div class="modal-card">
+          <div class="modal-header">
+            <h3 id="rc-sub-modal-title" class="modal-title">Substitute Class</h3>
+            <button type="button" id="rc-sub-modal-close-btn" class="modal-close-btn" aria-label="Close">&times;</button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="rc-sub-session-id" value="">
+            <p id="rc-sub-prompt" class="modal-prompt" style="font-size:0.85rem; color:#94a3b8; margin-bottom:12px;">
+              Replacing: <strong id="rc-sub-original-subj" class="highlight-text">--</strong> (<span id="rc-sub-original-time">--</span>)
+            </p>
+
+            <div class="form-group">
+              <label for="rc-sub-new-subject">New Replacement Subject (19 MBBS Subjects) *</label>
+              <select id="rc-sub-new-subject" class="tt-input" required>
+                <!-- 19 subjects populated dynamically -->
+              </select>
+            </div>
+
+            <!-- Class Type (Theory / Practical) Toggle -->
+            <div class="form-group" id="rc-sub-type-group">
+              <label>Class Type</label>
+              <div class="sem-type-toggle">
+                <button type="button" id="rc-sub-type-theory" class="sem-type-btn active" data-type="theory">Theory</button>
+                <button type="button" id="rc-sub-type-practical" class="sem-type-btn" data-type="practical">Practical</button>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label for="rc-sub-start-time">Start Time *</label>
+                <input type="time" id="rc-sub-start-time" class="tt-input" value="08:00" required>
+              </div>
+              <div class="form-group flex-1">
+                <label for="rc-sub-end-time">End Time *</label>
+                <input type="time" id="rc-sub-end-time" class="tt-input" value="09:00" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="rc-sub-note">Reason / Note (Optional)</label>
+              <input type="text" id="rc-sub-note" class="tt-input" placeholder="e.g. Dr. Sharma on leave, Emergency swap">
+            </div>
+
+            <div id="rc-sub-error-msg" class="form-error hidden"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="rc-sub-cancel-btn" class="tt-btn tt-btn-secondary">Cancel</button>
+            <button type="button" id="rc-sub-save-btn" class="tt-btn tt-btn-primary">Apply Substitution</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: Add Extra Class Modal -->
+      <div id="rc-extra-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="rc-extra-modal-title">
+        <div class="modal-card">
+          <div class="modal-header">
+            <h3 id="rc-extra-modal-title" class="modal-title">Add Extra Class</h3>
+            <button type="button" id="rc-extra-modal-close-btn" class="modal-close-btn" aria-label="Close">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p class="modal-prompt" style="font-size:0.85rem; color:#94a3b8; margin-bottom:12px;">
+              Adding compensatory / extra class for: <strong id="rc-extra-modal-date" class="highlight-text">--</strong>
+            </p>
+
+            <div class="form-group">
+              <label for="rc-extra-subject-select">Subject (19 MBBS Subjects) *</label>
+              <select id="rc-extra-subject-select" class="tt-input" required>
+                <!-- 19 subjects populated dynamically -->
+              </select>
+            </div>
+
+            <!-- Class Type (Theory / Practical) Toggle -->
+            <div class="form-group" id="rc-extra-type-group">
+              <label>Class Type</label>
+              <div class="sem-type-toggle">
+                <button type="button" id="rc-extra-type-theory" class="sem-type-btn active" data-type="theory">Theory</button>
+                <button type="button" id="rc-extra-type-practical" class="sem-type-btn" data-type="practical">Practical</button>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label for="rc-extra-start-time">Start Time *</label>
+                <input type="time" id="rc-extra-start-time" class="tt-input" value="14:00" required>
+              </div>
+              <div class="form-group flex-1">
+                <label for="rc-extra-end-time">End Time *</label>
+                <input type="time" id="rc-extra-end-time" class="tt-input" value="15:00" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="rc-extra-note">Note / Unit (Optional)</label>
+              <input type="text" id="rc-extra-note" class="tt-input" placeholder="e.g. Compensatory lecture, LT-2">
+            </div>
+
+            <div id="rc-extra-error-msg" class="form-error hidden"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="rc-extra-cancel-btn" class="tt-btn tt-btn-secondary">Cancel</button>
+            <button type="button" id="rc-extra-save-btn" class="tt-btn tt-btn-primary">Add Extra Class</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Overview Attendance Panel -->
+    <section id="overview-attendance-panel" class="feature-panel" aria-hidden="true">
+      <div class="panel-header">
+        <button type="button" id="overview-panel-back-btn" class="panel-back-btn" aria-label="Back">
+          &larr; Back
+        </button>
+        <span class="panel-title-text">Attendance Overview</span>
+        <button type="button" id="overview-refresh-btn" class="panel-action-btn">Refresh</button>
+      </div>
+
+      <div class="panel-scroll-body">
+        
+        <!-- Filter Bar: Semester selector -->
+        <div class="overview-sem-filter-row">
+          <label for="overview-sem-select" class="overview-filter-label">Semester Filter:</label>
+          <select id="overview-sem-select" class="tt-input overview-select">
+            <!-- Dynamically populated: Active semester / All semesters -->
+          </select>
+        </div>
+
+        <!-- Top Metric Summary Cards (Theory, Practical, Clinical Postings) -->
+        <div class="overview-summary-grid">
+          
+          <!-- Theory Summary Card -->
+          <div class="overview-metric-card metric-theory">
+            <div class="metric-card-top">
+              <span class="metric-tag">THEORY (NMC ≥ 75%)</span>
+              <span id="metric-theory-status" class="metric-status-badge">--</span>
+            </div>
+            <div class="metric-card-middle">
+              <span id="metric-theory-pct" class="metric-pct-val">--%</span>
+              <span id="metric-theory-counts" class="metric-count-val">0 / 0 attended</span>
+            </div>
+            <div class="metric-progress-track">
+              <div id="metric-theory-bar" class="metric-progress-fill" style="width: 0%;"></div>
+            </div>
+            <div class="metric-target-info">
+              <span>NMC Min: 75%</span>
+              <span id="metric-theory-margin">--</span>
+            </div>
+          </div>
+
+          <!-- Practical Summary Card -->
+          <div class="overview-metric-card metric-practical">
+            <div class="metric-card-top">
+              <span class="metric-tag">PRACTICAL (NMC ≥ 75%)</span>
+              <span id="metric-practical-status" class="metric-status-badge">--</span>
+            </div>
+            <div class="metric-card-middle">
+              <span id="metric-practical-pct" class="metric-pct-val">--%</span>
+              <span id="metric-practical-counts" class="metric-count-val">0 / 0 attended</span>
+            </div>
+            <div class="metric-progress-track">
+              <div id="metric-practical-bar" class="metric-progress-fill" style="width: 0%;"></div>
+            </div>
+            <div class="metric-target-info">
+              <span>NMC Min: 75%</span>
+              <span id="metric-practical-margin">--</span>
+            </div>
+          </div>
+
+          <!-- Clinical Postings Summary Card -->
+          <div class="overview-metric-card metric-clinical">
+            <div class="metric-card-top">
+              <span class="metric-tag">CLINICAL POSTINGS</span>
+              <span id="metric-clinical-status" class="metric-status-badge">--</span>
+            </div>
+            <div class="metric-card-middle">
+              <span id="metric-clinical-pct" class="metric-pct-val">--%</span>
+              <span id="metric-clinical-counts" class="metric-count-val">0 / 0 attended</span>
+            </div>
+            <div class="metric-progress-track">
+              <div id="metric-clinical-bar" class="metric-progress-fill" style="width: 0%;"></div>
+            </div>
+            <div class="metric-target-info">
+              <span id="metric-clinical-target-label">Bunk Tracker</span>
+              <span id="metric-clinical-margin">--</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Filter Tabs: All / Theory / Practical / Clinical -->
+        <div class="overview-filter-pills" id="overview-tabs">
+          <button type="button" class="overview-tab-pill active" data-tab="all">All Subjects</button>
+          <button type="button" class="overview-tab-pill" data-tab="theory">Theory</button>
+          <button type="button" class="overview-tab-pill" data-tab="practical">Practical</button>
+          <button type="button" class="overview-tab-pill" data-tab="clinical">Clinical Postings</button>
+        </div>
+
+        <!-- Detailed Breakdown Cards Container -->
+        <div id="overview-subjects-container" class="overview-subjects-container">
+          <!-- Dynamically populated per-subject breakdown -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- +1 or -1 Impact Predictor Panel -->
+    <section id="plus-minus-panel" class="feature-panel" aria-hidden="true">
+      <div class="panel-header">
+        <button type="button" id="pm-panel-back-btn" class="panel-back-btn" aria-label="Back">
+          &larr; Back
+        </button>
+        <span class="panel-title-text">+1 or -1 Attendance Impact</span>
+        <button type="button" id="pm-refresh-btn" class="panel-action-btn">Refresh</button>
+      </div>
+
+      <div class="panel-scroll-body">
+        <div class="sem-info-banner">
+          <p>See exactly how attending (<strong>+1</strong>) or bunking (<strong>-1</strong>) the next class shifts your percentage based on classes held till date (<strong id="pm-current-date-label">--</strong>). Also shows how many classes change 1% attendance.</p>
+        </div>
+
+        <!-- Filter Tabs: All / Theory / Practical / Total -->
+        <div class="overview-filter-pills" id="pm-tabs">
+          <button type="button" class="pm-tab-pill active" data-tab="all">All Breakdowns</button>
+          <button type="button" class="pm-tab-pill" data-tab="theory">Theory</button>
+          <button type="button" class="pm-tab-pill" data-tab="practical">Practical</button>
+          <button type="button" class="pm-tab-pill" data-tab="total">Total (Combined)</button>
+        </div>
+
+        <!-- Subjects Container -->
+        <div id="pm-subjects-container" class="pm-subjects-container">
+          <!-- Dynamically populated per subject -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Backup & Restore (Export / Import) Panel -->
+    <section id="backup-panel" class="feature-panel" aria-hidden="true">
+      <div class="panel-header">
+        <button type="button" id="backup-panel-back-btn" class="panel-back-btn" aria-label="Back">
+          &larr; Back
+        </button>
+        <span class="panel-title-text">Export &amp; Import Data</span>
+      </div>
+
+      <div class="panel-scroll-body">
+        <div class="sem-info-banner">
+          <p>Export your complete MBBS attendance history, semester timetables, clinical rotations, and class replacements as a backup file directly to your device folder. You can import this file anytime to restore or transfer your data.</p>
+        </div>
+
+        <div class="backup-cards-stack">
+          <!-- Card 1: Export -->
+          <div class="backup-action-card">
+            <div class="backup-card-head">
+              <span class="backup-icon">📤</span>
+              <div>
+                <h3 class="backup-card-title">Export Backup File</h3>
+                <p class="backup-card-desc">Saves all attendance records, semesters, and postings into a single portable <strong>.json</strong> file in your device's Downloads or chosen folder.</p>
+              </div>
+            </div>
+            <button type="button" id="btn-export-data" class="tt-btn tt-btn-primary backup-btn">
+              Download Backup File (.json)
+            </button>
+            <button type="button" id="btn-share-data" class="tt-btn tt-btn-secondary backup-btn" style="margin-top: 8px;">
+              Share / Save to Drive or Files
+            </button>
+          </div>
+
+          <!-- Card 2: Import -->
+          <div class="backup-action-card">
+            <div class="backup-card-head">
+              <span class="backup-icon">📥</span>
+              <div>
+                <h3 class="backup-card-title">Import Backup File</h3>
+                <p class="backup-card-desc">Select a previously exported <strong>.json</strong> file from your local device folder to restore your complete data.</p>
+              </div>
+            </div>
+
+            <div class="backup-import-controls">
+              <label for="backup-file-input" class="tt-btn tt-btn-secondary backup-choose-btn">
+                <span>📁 Select File from Device</span>
+                <input type="file" id="backup-file-input" accept=".json,application/json" class="hidden-file-input">
+              </label>
+              <div id="backup-file-name" class="backup-selected-file hidden"></div>
+            </div>
+
+            <div id="backup-import-preview" class="backup-preview-box hidden">
+              <div class="backup-preview-title">Backup File Detected:</div>
+              <div id="backup-preview-details" class="backup-preview-details"></div>
+              <div class="backup-preview-warning">⚠️ Importing will safely merge and restore your records and timetables.</div>
+              <button type="button" id="btn-confirm-import" class="tt-btn tt-btn-primary backup-confirm-btn">
+                Confirm &amp; Restore Data
+              </button>
+            </div>
+
+            <div id="backup-status-msg" class="backup-status-msg hidden"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Attendance History Panel -->
+    <section id="attendance-history-panel" class="feature-panel" aria-hidden="true">
+      <div class="panel-header">
+        <button type="button" id="ah-panel-back-btn" class="panel-back-btn" aria-label="Back">
+          &larr; Back
+        </button>
+        <span class="panel-title-text">Attendance History</span>
+        <button type="button" id="ah-create-new-btn" class="panel-action-btn">+ Create New</button>
+      </div>
+
+      <div class="panel-scroll-body">
+        
+        <!-- View 1: History List View -->
+        <div id="ah-list-view" class="sem-view">
+          <div class="sem-info-banner">
+            <p>Log your past attendance history from college portals or past terms. These past records are integrated into overall attendance percentages and predictor metrics throughout the app.</p>
+          </div>
+
+          <div class="sem-list-container">
+            <div class="sem-list-header">
+              <h3>Logged Past Records (<span id="ah-records-count">0</span>)</h3>
+            </div>
+            <div id="ah-records-container" class="semesters-container">
+              <!-- Dynamically populated history cards -->
+            </div>
+          </div>
+        </div>
+
+        <!-- View 2: Create / Edit History Template -->
+        <div id="ah-editor-view" class="sem-view hidden">
+          <div class="form-title-row">
+            <h3 id="ah-editor-title">Create Past Record</h3>
+            <input type="hidden" id="ah-edit-id" value="">
+          </div>
+
+          <div class="form-group">
+            <label for="ah-subject-select">Subject (19 MBBS Subjects) *</label>
+            <select id="ah-subject-select" class="tt-input" required>
+              <!-- 19 MBBS subjects populated dynamically -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="ah-total-held-input">Total Number of Classes Held *</label>
+            <input type="number" id="ah-total-held-input" class="tt-input" min="1" placeholder="e.g. 40" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="ah-attended-input">Classes Attended (Present) *</label>
+              <input type="number" id="ah-attended-input" class="tt-input" min="0" placeholder="e.g. 32" required>
+            </div>
+            <div class="form-group flex-1">
+              <label for="ah-absent-input">Classes Bunked (Absent) *</label>
+              <input type="number" id="ah-absent-input" class="tt-input" min="0" placeholder="e.g. 8" required>
+            </div>
+          </div>
+
+          <div id="ah-calc-preview" class="ah-calc-preview">
+            Attendance: <strong id="ah-calc-attended">0</strong> Attended / <strong id="ah-calc-held">0</strong> Held • <strong id="ah-calc-absent">0</strong> Bunked (<span id="ah-calc-pct">0.0%</span>)
+          </div>
+
+          <!-- Optional Theory and Practical Breakdown -->
+          <div class="ah-breakdown-card">
+            <div class="ah-breakdown-header">
+              <span class="ah-breakdown-title">Theory &amp; Practical Breakdown (Optional)</span>
+              <span class="ah-breakdown-subtitle">Enter portal percentages to auto-balance Theory &amp; Practical accuracy</span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label for="ah-theory-pct-input">Theory Attendance %</label>
+                <input type="number" id="ah-theory-pct-input" class="tt-input" min="0" max="100" step="0.1" placeholder="e.g. 75.0 (%)">
+              </div>
+              <div class="form-group flex-1">
+                <label for="ah-practical-pct-input">Practical Attendance %</label>
+                <input type="number" id="ah-practical-pct-input" class="tt-input" min="0" max="100" step="0.1" placeholder="e.g. 85.0 (%)">
+              </div>
+            </div>
+
+            <!-- Auto-Calculated Solved Counts Preview -->
+            <div id="ah-breakdown-solved" class="ah-breakdown-solved">
+              <div class="ah-solved-item">
+                <span class="ah-solved-label">Theory Classes:</span>
+                <span id="ah-solved-theory" class="ah-solved-val">-- / --</span>
+              </div>
+              <div class="ah-solved-item">
+                <span class="ah-solved-label">Practical Classes:</span>
+                <span id="ah-solved-practical" class="ah-solved-val">-- / --</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="ah-editor-error-msg" class="form-error hidden"></div>
+
+          <div class="form-actions">
+            <button type="button" id="ah-editor-cancel-btn" class="tt-btn tt-btn-secondary">Cancel</button>
+            <button type="button" id="ah-editor-save-btn" class="tt-btn tt-btn-primary">Save Past Record</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Settings Panel (Feedback & Creator Credits) -->
+    <section id="settings-panel" class="feature-panel" aria-hidden="true">
+      <div class="panel-header">
+        <button type="button" id="settings-panel-back-btn" class="panel-back-btn" aria-label="Back">
+          &larr; Back
+        </button>
+        <span class="panel-title-text">Settings</span>
+        <div style="width: 58px;"></div>
+      </div>
+
+      <div class="panel-scroll-body settings-scroll-body">
+        
+        <div class="settings-group">
+          <!-- Dark & Light Mode Toggle Card -->
+          <div class="settings-item-card" id="settings-theme-card" role="button" tabindex="0" aria-label="Toggle App Theme">
+            <div class="settings-item-left">
+              <span class="settings-item-icon" id="theme-icon">🌙</span>
+              <div class="settings-item-text">
+                <span class="settings-item-title">App Theme</span>
+                <span class="settings-item-desc" id="theme-desc">Dark Mode</span>
+              </div>
+            </div>
+            <button type="button" id="theme-toggle-btn" class="theme-toggle-switch" aria-label="Toggle Dark and Light Mode">
+              <span class="theme-toggle-thumb"></span>
+            </button>
+          </div>
+
+          <!-- Replay Introduction Tour -->
+          <div class="settings-item-card" id="settings-tour-card" role="button" tabindex="0" aria-label="Replay Feature Introduction Tour">
+            <div class="settings-item-left">
+              <span class="settings-item-icon">✨</span>
+              <div class="settings-item-text">
+                <span class="settings-item-title">App Feature Tour</span>
+                <span class="settings-item-desc">Replay visual overview of key features &amp; shortcuts</span>
+              </div>
+            </div>
+            <span class="settings-item-arrow">&rarr;</span>
+          </div>
+
+          <!-- Feedback Card / Action -->
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfUGIu2XZrYi4usq-LOXffn3x9ddAqma-s1iTy0807VSBu7QA/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer" class="settings-item-card" id="settings-feedback-btn">
+            <div class="settings-item-left">
+              <span class="settings-item-icon">💬</span>
+              <div class="settings-item-text">
+                <span class="settings-item-title">FEEDBACK</span>
+                <span class="settings-item-desc">Tap to open form &amp; share suggestions or report issues</span>
+              </div>
+            </div>
+            <span class="settings-item-arrow">&rarr;</span>
+          </a>
+        </div>
+
+        <!-- Creator Credit & Signature Quote -->
+        <div class="settings-credit-box">
+          <p class="settings-quote">&ldquo;Made by LV, Made with LoVe, Made for you&rdquo;</p>
+          <span class="settings-author">&mdash; L v pavan</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Feature Placeholder Panel -->
+    <section id="feature-panel" class="feature-panel" aria-hidden="true">
+      <div class="panel-header">
+        <button type="button" id="panel-back-btn" class="panel-back-btn" aria-label="Back">
+          &larr; Back
+        </button>
+      </div>
+      <div class="panel-body">
+        <div class="feature-card-minimal">
+          <h2 id="panel-title" class="feature-title">Feature Title</h2>
+          <p id="panel-desc" class="feature-desc">
+            Feature placeholder description.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Spotlight Introduction Tour Overlay -->
+    <div id="intro-tour-overlay" class="intro-tour-overlay hidden" aria-hidden="true">
+      <svg class="tour-spotlight-svg" aria-hidden="true">
+        <defs>
+          <mask id="tour-spotlight-mask">
+            <rect width="100%" height="100%" fill="white" />
+            <rect id="tour-spotlight-rect" x="0" y="0" width="0" height="0" rx="14" ry="14" fill="black" />
+          </mask>
+        </defs>
+        <rect width="100%" height="100%" fill="rgba(5, 7, 12, 0.82)" mask="url(#tour-spotlight-mask)" />
+      </svg>
+      <div id="tour-highlight-box" class="tour-highlight-box"></div>
+      <div id="tour-card" class="tour-card" role="dialog" aria-modal="true" aria-labelledby="tour-title">
+        <div class="tour-card-header">
+          <div class="tour-badge-row">
+            <span class="tour-logo-icon">✨</span>
+            <span id="tour-step-badge" class="tour-step-badge">Step 1 of 5</span>
+          </div>
+          <button type="button" id="tour-skip-btn" class="tour-skip-btn">Skip Tour</button>
+        </div>
+        <div class="tour-card-body">
+          <h3 id="tour-title" class="tour-title">Feature Title</h3>
+          <p id="tour-desc" class="tour-desc">Feature description.</p>
+        </div>
+        <div class="tour-card-footer">
+          <div id="tour-dots" class="tour-dots"></div>
+          <div class="tour-nav-btns">
+            <button type="button" id="tour-prev-btn" class="tour-btn tour-btn-prev">Back</button>
+            <button type="button" id="tour-next-btn" class="tour-btn tour-btn-next">Next &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
