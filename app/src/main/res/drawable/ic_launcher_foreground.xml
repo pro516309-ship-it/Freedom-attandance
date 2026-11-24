@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Outer Circular Shield Glow -->
+    <path
+        android:fillColor="#152033"
+        android:pathData="M54,18 C73.88,18 90,34.12 90,54 C90,73.88 73.88,90 54,90 C34.12,90 18,73.88 18,54 C18,34.12 34.12,18 54,18 Z" />
+
+    <!-- Circular Accent Ring -->
+    <path
+        android:strokeColor="#2DD4BF"
+        android:strokeWidth="2.5"
+        android:pathData="M54,23 C71.12,23 85,36.88 85,54 C85,71.12 71.12,85 54,85 C36.88,85 23,71.12 23,54 C23,36.88 36.88,23 54,23 Z" />
+
+    <!-- Medical Plus Symbol Vertical Bar -->
+    <path
+        android:fillColor="#2DD4BF"
+        android:pathData="M48,34 h12 v40 h-12 z" />
+
+    <!-- Medical Plus Symbol Horizontal Bar -->
+    <path
+        android:fillColor="#2DD4BF"
+        android:pathData="M34,48 h40 v12 h-40 z" />
+
+    <!-- Center White Star / Caduceus Heart -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,49.5 L56.2,54 L61,54.6 L57.5,58 L58.3,62.8 L54,60.5 L49.7,62.8 L50.5,58 L47,54.6 L51.8,54 Z" />
+</vector>

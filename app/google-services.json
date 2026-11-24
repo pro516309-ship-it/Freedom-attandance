@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "275609899846",
+    "project_id": "markin-1f73e",
+    "storage_bucket": "markin-1f73e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275609899846:android:3cd99f64d6fdc97ea1cb47",
+        "android_client_info": {
+          "package_name": "com.mbbs.attendance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275609899846-cjg5maqj2b8418aobanigr09ebr8or2g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxmM8shxKhb5urMeeCvY401dczL9wdhX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "275609899846-cjg5maqj2b8418aobanigr09ebr8or2g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
